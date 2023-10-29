@@ -58,8 +58,7 @@ public class SLList<Item> {
 	public Item getLast() {
 		IntNode p = sentinel;
 
-		/* Advance p to the end of the list. */
-		while (p.next != null) {
+ 		while (p.next != null) {
 			p = p.next;
 		}
 

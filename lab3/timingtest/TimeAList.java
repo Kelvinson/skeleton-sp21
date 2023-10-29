@@ -26,7 +26,7 @@ public class TimeAList {
         AList<Double> items = new AList<>();
         AList<Integer> opCounts = new AList<>();
         int st = 1000;
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < 16; ++i) {
             Stopwatch sw = new Stopwatch();
             AList<Integer> cur = new AList<>();
             Ns.addLast(st);
