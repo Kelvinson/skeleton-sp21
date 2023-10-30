@@ -18,7 +18,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private void resize(int newCapacity) {
         assert  newCapacity > size : "new capacity must be larger than the current items count";
-        T[] newItems = (T[])new Object[newCapacity];
+        T[] newItems = (T[]) new Object[newCapacity];
         int j = (newCapacity - size) / 2;
         int i = (nextFront + 1) % items.length, len = 0;
         for (; len < size; ++i, ++len, ++j) {
@@ -61,7 +61,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public T removeFirst() {
-        if (size <= 0) return null;
+        if (size <= 0) {
+            return null;
+        }
         T first = get(0);
         items[(nextFront + 1) % items.length] = null;
         nextFront = (nextFront  + 1) % items.length;
@@ -74,7 +76,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeLast() {
-        if (size <= 0) return null;
+        if (size <= 0) {
+            return null;
+        }
         T last = get(size - 1);
         items[(nextBack - 1 + items.length) % items.length] = null;
         nextBack = (nextBack - 1 + items.length) % items.length;
@@ -97,8 +101,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (!(o instanceof Deque)) {
             return false;
         }
-        Deque<T> that = (Deque<T>)o;
-        if (that.size() != this.size) return false;
+        Deque<T> that = (Deque<T>) o;
+        if (that.size() != this.size) {
+            return false;
+        }
         for (int i = 0; i < that.size(); ++i) {
             if (!that.get(i).equals(this.get(i))) {
                 return false;
