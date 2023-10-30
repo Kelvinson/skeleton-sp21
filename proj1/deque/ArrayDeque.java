@@ -1,8 +1,9 @@
 package deque;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int nextFront;
@@ -15,7 +16,7 @@ public class ArrayDeque<T> implements Deque<T>{
         nextBack = 4;
     }
 
-    public void resize(int newCapacity) {
+    private void resize(int newCapacity) {
         assert  newCapacity > size : "new capacity must be larger than the current items count";
         T[] newItems = (T[])new Object[newCapacity];
         int j = (newCapacity - size) / 2;
@@ -93,12 +94,12 @@ public class ArrayDeque<T> implements Deque<T>{
     }
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof ArrayDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
-        ArrayDeque<T> that = (ArrayDeque<T>)o;
+        Deque<T> that = (Deque<T>)o;
         if (that.size() != this.size) return false;
-        for (int i = 0; i < that.size; ++i) {
+        for (int i = 0; i < that.size(); ++i) {
             if (!that.get(i).equals(this.get(i))) {
                 return false;
             }
@@ -106,7 +107,25 @@ public class ArrayDeque<T> implements Deque<T>{
         return true;
     }
 
+    @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ArrayDequeIterator();
+    }
+
+    private class ArrayDequeIterator implements Iterator<T> {
+
+        private int cur = 0;
+        @Override
+        public boolean hasNext() {
+            return cur < size;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return get(cur++);
+        }
     }
 }
