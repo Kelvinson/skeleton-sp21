@@ -3,8 +3,8 @@ package deque;
 public class ArrayDeque<T> implements Deque<T>{
     private T[] items;
     private int size;
-    int nextFront;
-    int nextBack;
+    private int nextFront;
+    private int nextBack;
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
@@ -23,7 +23,7 @@ public class ArrayDeque<T> implements Deque<T>{
         }
         items = newItems;
         nextBack = j;
-        nextFront = (newCapacity - size) / 2 - 1;
+        nextFront = ((newCapacity - size) / 2 - 1 + items.length) % items.length;
     }
     @Override
     public void addFirst(T item) {
@@ -66,7 +66,7 @@ public class ArrayDeque<T> implements Deque<T>{
         if (size <= 0) return null;
         T first = get(0);
         items[(nextFront + 1) % items.length] = null;
-        ++nextFront;
+        nextFront = (nextFront  + 1) % items.length;
         --size;
         if (size < (items.length / 4) && size >= 4) {
             resize(items.length / 4);
